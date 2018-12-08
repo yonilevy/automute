@@ -20,3 +20,6 @@ Otherwise, simply open the workspace file in Xcode and build "AutoMute", everyth
 ## Screenshots
 ![Screenshot1](https://user-images.githubusercontent.com/31284/49688097-ac653900-fb15-11e8-9c48-3db96df5dcbf.png)
 ![Screenshot2](https://user-images.githubusercontent.com/31284/49688098-ae2efc80-fb15-11e8-8034-14c67fb69d90.png)
+
+## Thankies
+[StartAtLoginController](https://github.com/alexzielenski/StartAtLoginController) by Alex Zielenski and Travis Tilley was super helpful!

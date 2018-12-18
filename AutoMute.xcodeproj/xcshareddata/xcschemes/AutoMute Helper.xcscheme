@@ -17,7 +17,7 @@
                BlueprintIdentifier = "E9395DB021A9B91B0078CC5C"
                BuildableName = "AutoMute Helper.app"
                BlueprintName = "AutoMute Helper"
-               ReferencedContainer = "container:automute.xcodeproj">
+               ReferencedContainer = "container:AutoMute.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "E9395DB021A9B91B0078CC5C"
             BuildableName = "AutoMute Helper.app"
             BlueprintName = "AutoMute Helper"
-            ReferencedContainer = "container:automute.xcodeproj">
+            ReferencedContainer = "container:AutoMute.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "E9395DB021A9B91B0078CC5C"
             BuildableName = "AutoMute Helper.app"
             BlueprintName = "AutoMute Helper"
-            ReferencedContainer = "container:automute.xcodeproj">
+            ReferencedContainer = "container:AutoMute.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "E9395DB021A9B91B0078CC5C"
             BuildableName = "AutoMute Helper.app"
             BlueprintName = "AutoMute Helper"
-            ReferencedContainer = "container:automute.xcodeproj">
+            ReferencedContainer = "container:AutoMute.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

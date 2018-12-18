@@ -32,8 +32,6 @@
 		E9395DEE21A9BDF60078CC5C /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9395DED21A9BDF60078CC5C /* CoreAudio.framework */; };
 		E9648F4621A9D44C003BC4D6 /* AutoMute Helper.app in Resources */ = {isa = PBXBuildFile; fileRef = E9395DB121A9B91B0078CC5C /* AutoMute Helper.app */; };
 		E9648F4921A9D64A003BC4D6 /* AutoMute Helper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = E9395DB121A9B91B0078CC5C /* AutoMute Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E99AA21D21A9D056007C8BC2 /* icon_status_connected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E99AA21B21A9D056007C8BC2 /* icon_status_connected@2x.png */; };
-		E99AA21E21A9D056007C8BC2 /* icon_status_disconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E99AA21C21A9D056007C8BC2 /* icon_status_disconnected@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +65,7 @@
 		E9395D7621A8814C0078CC5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E9395D7821A8814C0078CC5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9395D7921A8814C0078CC5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		E9395D7B21A8814C0078CC5C /* automute.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = automute.entitlements; sourceTree = "<group>"; };
+		E9395D7B21A8814C0078CC5C /* AutoMute.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutoMute.entitlements; sourceTree = "<group>"; };
 		E9395DB121A9B91B0078CC5C /* AutoMute Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AutoMute Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9395DB321A9B91B0078CC5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E9395DB421A9B91B0078CC5C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -101,8 +99,6 @@
 		E9395DE321A9BC580078CC5C /* NSImage+YLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+YLUtil.m"; sourceTree = "<group>"; };
 		E9395DEB21A9BDEE0078CC5C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		E9395DED21A9BDF60078CC5C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		E99AA21B21A9D056007C8BC2 /* icon_status_connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_status_connected@2x.png"; path = "automute/images/icon_status_connected@2x.png"; sourceTree = SOURCE_ROOT; };
-		E99AA21C21A9D056007C8BC2 /* icon_status_disconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_status_disconnected@2x.png"; path = "automute/images/icon_status_disconnected@2x.png"; sourceTree = SOURCE_ROOT; };
 		EFC92B2673F8615F0D84EFCB /* libPods-automute.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-automute.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD160341B91BE82FF452A10A /* Pods-automute.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-automute.debug.xcconfig"; path = "Pods/Target Support Files/Pods-automute/Pods-automute.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,7 +146,7 @@
 		E9395D6421A8814B0078CC5C = {
 			isa = PBXGroup;
 			children = (
-				E9395D6F21A8814B0078CC5C /* automute */,
+				E9395D6F21A8814B0078CC5C /* AutoMute */,
 				E9395DB221A9B91B0078CC5C /* AutoMute Helper */,
 				E9395D6E21A8814B0078CC5C /* Products */,
 				AFAD487F13BFCA666CC92B83 /* Pods */,
@@ -167,10 +163,9 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E9395D6F21A8814B0078CC5C /* automute */ = {
+		E9395D6F21A8814B0078CC5C /* AutoMute */ = {
 			isa = PBXGroup;
 			children = (
-				E99AA21A21A9CFFB007C8BC2 /* images */,
 				E9395DD821A9BC580078CC5C /* MJDisableMuteManager.h */,
 				E9395DDE21A9BC580078CC5C /* MJDisableMuteManager.m */,
 				E9395DE021A9BC580078CC5C /* MJHeadphoneDetector.cpp */,
@@ -199,9 +194,9 @@
 				E9395D7521A8814C0078CC5C /* MainMenu.xib */,
 				E9395D7821A8814C0078CC5C /* Info.plist */,
 				E9395D7921A8814C0078CC5C /* main.m */,
-				E9395D7B21A8814C0078CC5C /* automute.entitlements */,
+				E9395D7B21A8814C0078CC5C /* AutoMute.entitlements */,
 			);
-			path = automute;
+			path = AutoMute;
 			sourceTree = "<group>";
 		};
 		E9395DB221A9B91B0078CC5C /* AutoMute Helper */ = {
@@ -216,16 +211,6 @@
 				E9395DBE21A9B91B0078CC5C /* AutoMute_Helper.entitlements */,
 			);
 			path = "AutoMute Helper";
-			sourceTree = "<group>";
-		};
-		E99AA21A21A9CFFB007C8BC2 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				E99AA21B21A9D056007C8BC2 /* icon_status_connected@2x.png */,
-				E99AA21C21A9D056007C8BC2 /* icon_status_disconnected@2x.png */,
-			);
-			name = images;
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,7 +270,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E9395D6821A8814B0078CC5C /* Build configuration list for PBXProject "automute" */;
+			buildConfigurationList = E9395D6821A8814B0078CC5C /* Build configuration list for PBXProject "AutoMute" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -313,9 +298,7 @@
 				E9395DD121A9BC0E0078CC5C /* WelcomePopup.xib in Resources */,
 				E9395D7421A8814C0078CC5C /* Assets.xcassets in Resources */,
 				E9395D7721A8814C0078CC5C /* MainMenu.xib in Resources */,
-				E99AA21E21A9D056007C8BC2 /* icon_status_disconnected@2x.png in Resources */,
 				E9648F4621A9D44C003BC4D6 /* AutoMute Helper.app in Resources */,
-				E99AA21D21A9D056007C8BC2 /* icon_status_connected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,7 +516,7 @@
 				CODE_SIGN_ENTITLEMENTS = automute/automute.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 26ZKW6U635;
+				DEVELOPMENT_TEAM = SP33S2M5R4;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -557,7 +540,7 @@
 				CODE_SIGN_ENTITLEMENTS = automute/automute.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 26ZKW6U635;
+				DEVELOPMENT_TEAM = SP33S2M5R4;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -580,7 +563,7 @@
 				CODE_SIGN_ENTITLEMENTS = "AutoMute Helper/AutoMute_Helper.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 26ZKW6U635;
+				DEVELOPMENT_TEAM = SP33S2M5R4;
 				INFOPLIST_FILE = "AutoMute Helper/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -599,7 +582,7 @@
 				CODE_SIGN_ENTITLEMENTS = "AutoMute Helper/AutoMute_Helper.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 26ZKW6U635;
+				DEVELOPMENT_TEAM = SP33S2M5R4;
 				INFOPLIST_FILE = "AutoMute Helper/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -614,7 +597,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E9395D6821A8814B0078CC5C /* Build configuration list for PBXProject "automute" */ = {
+		E9395D6821A8814B0078CC5C /* Build configuration list for PBXProject "AutoMute" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E9395D7C21A8814C0078CC5C /* Debug */,

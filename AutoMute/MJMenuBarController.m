@@ -275,10 +275,11 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
 - (void)updateMenuIcon:(BOOL)headphonesConnected
 {
     if (headphonesConnected) {
-        self.statusItem.image = [NSImage imageNamed:@"icon_status_connected"];
+        self.statusItem.image = [NSImage imageNamed:@"IconStatusConnected"];
     } else {
-        self.statusItem.image = [NSImage imageNamed:@"icon_status_disconnected"];
+        self.statusItem.image = [NSImage imageNamed:@"IconStatusDisconnected"];
     }
+
     self.statusItem.image.template = YES;
 
     if ([self.userDefaults isMutingDisabled]) {
@@ -290,7 +291,7 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     if (!headphonesConnected) {
         BOOL isDark = [@"Dark" isEqualToString:[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"]];
         self.statusItem.image = [self.statusItem.image imageTintedWithColor:
-                isDark ? [NSColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1] : [NSColor colorWithRed:1 green:1 blue:1 alpha:0.7]];
+                isDark ? [NSColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1] : [NSColor colorWithRed:1 green:1 blue:1 alpha:0.7]];
     }
 }
 

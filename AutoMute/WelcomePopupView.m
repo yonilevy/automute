@@ -8,7 +8,6 @@
 {
     [super awakeFromNib];
 
-    // To support Dark Mode.
     [self.connectedImage.image setTemplate:YES];
     [self.disconnectedImage.image setTemplate:YES];
 }

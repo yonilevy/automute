@@ -35,7 +35,8 @@
     self.headphoneDetector->listen(^(bool headphonesConnected) {
         [weakSelf onHeadphoneStateChangedTo:headphonesConnected];
     });
-    [self.menuBarController updateMenuIcon:self.headphoneDetector->areHeadphonesConnected()];
+    
+    [self menubarUpdateIcon];
 
     if (![self.userDefaults didSeeWelcomeScreen]) {
         [self.menuBarController showWelcomePopup];
@@ -52,6 +53,13 @@
                                                            selector:@selector(didWake)
                                                                name:NSWorkspaceDidWakeNotification
                                                              object:nil];
+    
+    // Listen for dark mode changes
+    [NSDistributedNotificationCenter.defaultCenter addObserver:self selector:@selector(darkModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object: nil];
+}
+
+-(void)darkModeChanged:(NSNotification *) notification {
+    [self menubarUpdateIcon];
 }
 
 - (void)willSleep
@@ -59,6 +67,7 @@
     self.didMuteOnLastSleep =
             [self menuBarController_isSetToMuteOnSleep] && !self.headphoneDetector->areHeadphonesConnected() && [self mute];
 }
+
 
 - (void)didWake
 {
@@ -69,7 +78,8 @@
 
 - (void)onHeadphoneStateChangedTo:(bool)connected
 {
-    [self.menuBarController updateMenuIcon:connected];
+    [self.menuBarController updateMenuIcon:self.headphoneDetector->areHeadphonesConnected()];
+    
     if (!connected && [self menuBarController_isSetToMuteOnHeadphones]) {
         __weak AppDelegate *weakSelf = self;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
@@ -142,6 +152,12 @@
 - (void)disableMuteManager_updateDisabledMuting:(BOOL)isDisabled
 {
     self.isMutingDisabled = isDisabled;
+    
+    [self menubarUpdateIcon];
+}
+
+- (void)menubarUpdateIcon
+{
     [self.menuBarController updateMenuIcon:self.headphoneDetector->areHeadphonesConnected()];
 }
 

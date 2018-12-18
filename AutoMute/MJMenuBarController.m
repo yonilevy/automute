@@ -291,7 +291,7 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     if (!headphonesConnected) {
         BOOL isDark = [@"Dark" isEqualToString:[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"]];
         self.statusItem.image = [self.statusItem.image imageTintedWithColor:
-                isDark ? [NSColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1] : [NSColor colorWithRed:1 green:1 blue:1 alpha:0.7]];
+                isDark ? [NSColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1] : [NSColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1]];
     }
 }
 

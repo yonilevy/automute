@@ -301,7 +301,9 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
 
 - (void)terminate
 {
-    [[NSStatusBar systemStatusBar] removeStatusItem:self.statusItem];
+    // Note: removed so that when quitting and relaunching the menu bar item
+    //  remains at the same position (otherwise, resets to leftmost)
+//    [[NSStatusBar systemStatusBar] removeStatusItem:self.statusItem];
 }
 
 @end

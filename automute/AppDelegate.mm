@@ -16,6 +16,7 @@
 @property(nonatomic, strong) StartAtLoginController *startAtLoginController;
 @property(nonatomic) BOOL isMutingDisabled;
 @property(nonatomic) BOOL didMuteOnLastSleep;
+@property(nonatomic) BOOL didMuteOnLastLock;
 @end
 
 @implementation AppDelegate
@@ -43,15 +44,29 @@
         [self.menuBarController showLaunchAtLoginPopup];
     }
 
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                           selector:@selector(willSleep)
-                                                               name:NSWorkspaceWillSleepNotification
-                                                             object:nil];
+    [[[NSWorkspace sharedWorkspace] notificationCenter]
+            addObserver:self
+               selector:@selector(willSleep)
+                   name:NSWorkspaceWillSleepNotification
+                 object:nil];
 
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                           selector:@selector(didWake)
-                                                               name:NSWorkspaceDidWakeNotification
-                                                             object:nil];
+    [[[NSWorkspace sharedWorkspace] notificationCenter]
+            addObserver:self
+               selector:@selector(didWake)
+                   name:NSWorkspaceDidWakeNotification
+                 object:nil];
+
+    [[NSDistributedNotificationCenter defaultCenter]
+            addObserver:self
+               selector:@selector(didLock)
+                   name:@"com.apple.screenIsLocked"
+                 object:nil];
+
+    [[NSDistributedNotificationCenter defaultCenter]
+            addObserver:self
+               selector:@selector(didUnlock)
+                   name:@"com.apple.screenIsUnlocked"
+                 object:nil];
 }
 
 - (void)willSleep
@@ -64,6 +79,19 @@
 {
     if (self.didMuteOnLastSleep) {
         [self.menuBarController showSleepMuteNotification];
+    }
+}
+
+- (void)didLock
+{
+    self.didMuteOnLastLock =
+            [self menuBarController_isSetToMuteOnLock] && !self.headphoneDetector->areHeadphonesConnected() && [self mute];
+}
+
+- (void)didUnlock
+{
+    if (self.didMuteOnLastLock) {
+        [self.menuBarController showLockMuteNotification];
     }
 }
 
@@ -127,6 +155,16 @@
 - (void)menuBarController_setMuteOnSleep:(BOOL)muteOnSleep
 {
     [self.userDefaults setMuteOnSleep:muteOnSleep];
+}
+
+- (BOOL)menuBarController_isSetToMuteOnLock
+{
+    return self.userDefaults.isSetToMuteOnLock;
+}
+
+- (void)menuBarController_setMuteOnLock:(BOOL)muteOnLock
+{
+    [self.userDefaults setMuteOnLock:muteOnLock];
 }
 
 - (BOOL)menuBarController_isSetToMuteOnHeadphones

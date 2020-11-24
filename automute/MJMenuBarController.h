@@ -11,6 +11,8 @@
 - (void)menuBarController_setLaunchAtLogin:(BOOL)launchAtLogin;
 - (BOOL)menuBarController_isSetToMuteOnSleep;
 - (void)menuBarController_setMuteOnSleep:(BOOL)muteOnSleep;
+- (BOOL)menuBarController_isSetToMuteOnLock;
+- (void)menuBarController_setMuteOnLock:(BOOL)muteOnLock;
 - (BOOL)menuBarController_isSetToMuteOnHeadphones;
 - (void)menuBarController_setMuteOnHeadphones:(BOOL)muteOnHeadphones;
 - (void)menuBarController_toggleMuteNotifications;
@@ -26,6 +28,7 @@
 - (void)showLaunchAtLoginPopup;
 - (void)showHeadphonesDisconnectedMuteNotification;
 - (void)showSleepMuteNotification;
+- (void)showLockMuteNotification;
 - (void)updateMenuIcon:(BOOL)headphonesConnected;
 - (void)terminate;
 @end

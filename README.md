@@ -1,8 +1,11 @@
 # AutoMute
-A MacOS menu bar app that mutes the sound on headphones disconnect / awake from sleep.
+A MacOS menu bar app that mutes the sound when:
+* Headphones get disconnected
+* Mac goes to sleep
+* Mac gets locked / enters screen saver
 
 ## Marketing blurb
-As long as AutoMute is running, whenever your Mac goes to sleep, wakes up, or a pair of headphones gets disconnected - the sound is automatically muted.
+As long as AutoMute is running, whenever your Mac goes to sleep, gets locked, or a pair of headphones gets disconnected - the sound is automatically muted.
 
 Works with bluetooth headphones as well!
 

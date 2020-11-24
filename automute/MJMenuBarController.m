@@ -11,6 +11,7 @@ static const NSInteger MENU_ITEM_LAUNCH_AT_LOGIN = 103;
 static const NSInteger MENU_ITEM_MUTE_ON_SLEEP = 104;
 static const NSInteger MENU_ITEM_MUTE_ON_HEADPHONES = 105;
 static const NSInteger MENU_ITEM_MUTE_NOTIFICATIONS = 106;
+static const NSInteger MENU_ITEM_MUTE_ON_LOCK = 107;
 
 static const NSInteger MENU_ITEM_DISABLE_1H = 201;
 static const NSInteger MENU_ITEM_DISABLE_6H = 202;
@@ -56,9 +57,10 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     [menu addItem:[self buildMenuItemWithTitle:@"Welcome" action:@selector(showWelcomePopup)]];
     [menu addItem:[NSMenuItem separatorItem]];
     [menu addItem:[NSMenuItem separatorItem]];
-    NSMenuItem *triggersItem = [self buildMenuItemWithTitle:@"Triggers" action:nil];
+    NSMenuItem *triggersItem = [self buildMenuItemWithTitle:@"Mute Triggers" action:nil];
     NSMenu *muteOnSubmenu = [[NSMenu alloc] init];
-    [muteOnSubmenu addItem:[self buildMenuItemWithTitle:@"Mac Awakes from Sleep" action:@selector(muteOnSleepToggled) tag:MENU_ITEM_MUTE_ON_SLEEP]];
+    [muteOnSubmenu addItem:[self buildMenuItemWithTitle:@"Mac Goes to Sleep" action:@selector(muteOnSleepToggled) tag:MENU_ITEM_MUTE_ON_SLEEP]];
+    [muteOnSubmenu addItem:[self buildMenuItemWithTitle:@"Mac Gets Locked / Enters Screen Saver" action:@selector(muteOnLockToggled) tag:MENU_ITEM_MUTE_ON_LOCK]];
     [muteOnSubmenu addItem:[self buildMenuItemWithTitle:@"Headphones Disconnected" action:@selector(muteOnHeadphonesToggled) tag:MENU_ITEM_MUTE_ON_HEADPHONES]];
     triggersItem.submenu = muteOnSubmenu;
     [menu addItem:triggersItem];
@@ -146,6 +148,11 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     [self.delegate menuBarController_setMuteOnSleep:![self.delegate menuBarController_isSetToMuteOnSleep]];
 }
 
+- (void)muteOnLockToggled
+{
+    [self.delegate menuBarController_setMuteOnLock:![self.delegate menuBarController_isSetToMuteOnLock]];
+}
+
 - (void)muteOnHeadphonesToggled
 {
     [self.delegate menuBarController_setMuteOnHeadphones:![self.delegate menuBarController_isSetToMuteOnHeadphones]];
@@ -218,6 +225,11 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     [self showNotificationWithTitle:@"Woke up from sleep" body:@"Sound Muted."];
 }
 
+- (void)showLockMuteNotification
+{
+    [self showNotificationWithTitle:@"Unlocked" body:@"Sound Muted."];
+}
+
 - (void)showNotificationWithTitle:(NSString *)title
                              body:(NSString *)body
 {
@@ -264,6 +276,9 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     }
     if (menuItem.tag == MENU_ITEM_MUTE_ON_SLEEP) {
         menuItem.state = [self.delegate menuBarController_isSetToMuteOnSleep] ? NSOnState : NSOffState;
+    }
+    if (menuItem.tag == MENU_ITEM_MUTE_ON_LOCK) {
+        menuItem.state = [self.delegate menuBarController_isSetToMuteOnLock] ? NSOnState : NSOffState;
     }
     if (menuItem.tag == MENU_ITEM_MUTE_ON_HEADPHONES) {
         menuItem.state = [self.delegate menuBarController_isSetToMuteOnHeadphones] ? NSOnState : NSOffState;

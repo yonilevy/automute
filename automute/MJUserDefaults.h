@@ -16,7 +16,10 @@
 - (NSTimeInterval)getScheduledTimeToEnableMuting;
 
 - (BOOL)isSetToMuteOnSleep;
-- (void)setMuteOnSleep:(BOOL)sleep;
+- (void)setMuteOnSleep:(BOOL)muteOnSleep;
+
+- (BOOL)isSetToMuteOnLock;
+- (void)setMuteOnLock:(BOOL)muteOnLock;
 
 - (BOOL)isSetToMuteOnHeadphones;
 - (void)setMuteOnHeadphones:(BOOL)muteOnHeadphones;

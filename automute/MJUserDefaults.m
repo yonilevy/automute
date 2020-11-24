@@ -6,6 +6,7 @@ static NSString *const SAW_LAUNCH_AT_LOGIN_POPUP = @"SAW_LAUNCH_AT_LOGIN_POPUP";
 static NSString *const MUTING_DISABLED = @"MUTING_DISABLED";
 static NSString *const SCHEDULED_TIME_TO_ENABLE_MUTING = @"SCHEDULED_TIME_TO_ENABLE_MUTING";
 static NSString *const MUTE_ON_SLEEP = @"MUTE_ON_SLEEP";
+static NSString *const MUTE_ON_LOCK = @"MUTE_ON_LOCK";
 static NSString *const MUTE_ON_HEADPHONES = @"MUTE_ON_HEADPHONES";
 static NSString *const MUTE_NOTIFICATIONS_ENABLED = @"MUTE_NOTIFICATIONS_ENABLED";
 
@@ -22,6 +23,7 @@ static NSString *const MUTE_NOTIFICATIONS_ENABLED = @"MUTE_NOTIFICATIONS_ENABLED
     self.defaults = [NSUserDefaults standardUserDefaults];
     [self.defaults registerDefaults:@{
             MUTE_ON_SLEEP: @(YES),
+            MUTE_ON_LOCK: @(YES),
             MUTE_ON_HEADPHONES: @(YES),
             MUTE_NOTIFICATIONS_ENABLED: @(YES)
     }];
@@ -82,6 +84,17 @@ static NSString *const MUTE_NOTIFICATIONS_ENABLED = @"MUTE_NOTIFICATIONS_ENABLED
 - (void)setMuteOnSleep:(BOOL)muteOnSleep
 {
     [self.defaults setBool:muteOnSleep forKey:MUTE_ON_SLEEP];
+    [self.defaults synchronize];
+}
+
+- (BOOL)isSetToMuteOnLock
+{
+    return [self.defaults boolForKey:MUTE_ON_LOCK];
+}
+
+- (void)setMuteOnLock:(BOOL)muteOnLock
+{
+    [self.defaults setBool:muteOnLock forKey:MUTE_ON_LOCK];
     [self.defaults synchronize];
 }
 

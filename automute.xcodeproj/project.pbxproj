@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17CA7E85D87F26DBC83DA1A8 /* libPods-automute.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFC92B2673F8615F0D84EFCB /* libPods-automute.a */; };
+		A0B69452D9CA5750B10BAAC0 /* libPods-AutoMute.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A59824F770771BDC1915327 /* libPods-AutoMute.a */; };
 		E9395D7421A8814C0078CC5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9395D7321A8814C0078CC5C /* Assets.xcassets */; };
 		E9395D7721A8814C0078CC5C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9395D7521A8814C0078CC5C /* MainMenu.xib */; };
 		E9395D7A21A8814C0078CC5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E9395D7921A8814C0078CC5C /* main.m */; };
@@ -60,6 +60,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		09DD11CF37E1CF049B022735 /* Pods-AutoMute.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoMute.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutoMute/Pods-AutoMute.release.xcconfig"; sourceTree = "<group>"; };
+		1A59824F770771BDC1915327 /* libPods-AutoMute.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AutoMute.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB270DC6A3FDDBD8AB59966F /* Pods-automute.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-automute.release.xcconfig"; path = "Pods/Target Support Files/Pods-automute/Pods-automute.release.xcconfig"; sourceTree = "<group>"; };
 		E9395D6D21A8814B0078CC5C /* AutoMute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoMute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9395D7021A8814B0078CC5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -103,7 +105,7 @@
 		E9395DED21A9BDF60078CC5C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		E99AA21B21A9D056007C8BC2 /* icon_status_connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_status_connected@2x.png"; path = "automute/images/icon_status_connected@2x.png"; sourceTree = SOURCE_ROOT; };
 		E99AA21C21A9D056007C8BC2 /* icon_status_disconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_status_disconnected@2x.png"; path = "automute/images/icon_status_disconnected@2x.png"; sourceTree = SOURCE_ROOT; };
-		EFC92B2673F8615F0D84EFCB /* libPods-automute.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-automute.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED523A2C6D19073018415E8C /* Pods-AutoMute.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoMute.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutoMute/Pods-AutoMute.debug.xcconfig"; sourceTree = "<group>"; };
 		FD160341B91BE82FF452A10A /* Pods-automute.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-automute.debug.xcconfig"; path = "Pods/Target Support Files/Pods-automute/Pods-automute.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,7 +116,7 @@
 			files = (
 				E9395DEE21A9BDF60078CC5C /* CoreAudio.framework in Frameworks */,
 				E9395DEC21A9BDEE0078CC5C /* ServiceManagement.framework in Frameworks */,
-				17CA7E85D87F26DBC83DA1A8 /* libPods-automute.a in Frameworks */,
+				A0B69452D9CA5750B10BAAC0 /* libPods-AutoMute.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +135,7 @@
 			children = (
 				E9395DED21A9BDF60078CC5C /* CoreAudio.framework */,
 				E9395DEB21A9BDEE0078CC5C /* ServiceManagement.framework */,
-				EFC92B2673F8615F0D84EFCB /* libPods-automute.a */,
+				1A59824F770771BDC1915327 /* libPods-AutoMute.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -143,6 +145,8 @@
 			children = (
 				FD160341B91BE82FF452A10A /* Pods-automute.debug.xcconfig */,
 				CB270DC6A3FDDBD8AB59966F /* Pods-automute.release.xcconfig */,
+				ED523A2C6D19073018415E8C /* Pods-AutoMute.debug.xcconfig */,
+				09DD11CF37E1CF049B022735 /* Pods-AutoMute.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -346,7 +350,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-automute-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-AutoMute-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -527,7 +531,7 @@
 		};
 		E9395D7F21A8814C0078CC5C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD160341B91BE82FF452A10A /* Pods-automute.debug.xcconfig */;
+			baseConfigurationReference = ED523A2C6D19073018415E8C /* Pods-AutoMute.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = automute/automute.entitlements;
@@ -551,7 +555,7 @@
 		};
 		E9395D8021A8814C0078CC5C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB270DC6A3FDDBD8AB59966F /* Pods-automute.release.xcconfig */;
+			baseConfigurationReference = 09DD11CF37E1CF049B022735 /* Pods-AutoMute.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = automute/automute.entitlements;

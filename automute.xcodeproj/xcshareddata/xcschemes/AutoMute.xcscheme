@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E9395DB021A9B91B0078CC5C"
-               BuildableName = "AutoMute Helper.app"
-               BlueprintName = "AutoMute Helper"
+               BlueprintIdentifier = "E9395D6C21A8814B0078CC5C"
+               BuildableName = "AutoMute.app"
+               BlueprintName = "AutoMute"
                ReferencedContainer = "container:automute.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -55,14 +55,18 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E9395DB021A9B91B0078CC5C"
-            BuildableName = "AutoMute Helper.app"
-            BlueprintName = "AutoMute Helper"
+            BlueprintIdentifier = "E9395D6C21A8814B0078CC5C"
+            BuildableName = "AutoMute.app"
+            BlueprintName = "AutoMute"
             ReferencedContainer = "container:automute.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
+      <LocationScenarioReference
+         identifier = "com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier"
+         referenceType = "1">
+      </LocationScenarioReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

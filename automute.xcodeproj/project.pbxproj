@@ -32,8 +32,6 @@
 		E9395DEE21A9BDF60078CC5C /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9395DED21A9BDF60078CC5C /* CoreAudio.framework */; };
 		E9648F4621A9D44C003BC4D6 /* AutoMute Helper.app in Resources */ = {isa = PBXBuildFile; fileRef = E9395DB121A9B91B0078CC5C /* AutoMute Helper.app */; };
 		E9648F4921A9D64A003BC4D6 /* AutoMute Helper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = E9395DB121A9B91B0078CC5C /* AutoMute Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E99AA21D21A9D056007C8BC2 /* icon_status_connected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E99AA21B21A9D056007C8BC2 /* icon_status_connected@2x.png */; };
-		E99AA21E21A9D056007C8BC2 /* icon_status_disconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E99AA21C21A9D056007C8BC2 /* icon_status_disconnected@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,8 +101,6 @@
 		E9395DE321A9BC580078CC5C /* NSImage+YLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+YLUtil.m"; sourceTree = "<group>"; };
 		E9395DEB21A9BDEE0078CC5C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		E9395DED21A9BDF60078CC5C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		E99AA21B21A9D056007C8BC2 /* icon_status_connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_status_connected@2x.png"; path = "automute/images/icon_status_connected@2x.png"; sourceTree = SOURCE_ROOT; };
-		E99AA21C21A9D056007C8BC2 /* icon_status_disconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_status_disconnected@2x.png"; path = "automute/images/icon_status_disconnected@2x.png"; sourceTree = SOURCE_ROOT; };
 		ED523A2C6D19073018415E8C /* Pods-AutoMute.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoMute.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutoMute/Pods-AutoMute.debug.xcconfig"; sourceTree = "<group>"; };
 		FD160341B91BE82FF452A10A /* Pods-automute.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-automute.debug.xcconfig"; path = "Pods/Target Support Files/Pods-automute/Pods-automute.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,7 +170,6 @@
 		E9395D6F21A8814B0078CC5C /* automute */ = {
 			isa = PBXGroup;
 			children = (
-				E99AA21A21A9CFFB007C8BC2 /* images */,
 				E9395DD821A9BC580078CC5C /* MJDisableMuteManager.h */,
 				E9395DDE21A9BC580078CC5C /* MJDisableMuteManager.m */,
 				E9395DE021A9BC580078CC5C /* MJHeadphoneDetector.cpp */,
@@ -220,16 +215,6 @@
 				E9395DBE21A9B91B0078CC5C /* AutoMute_Helper.entitlements */,
 			);
 			path = "AutoMute Helper";
-			sourceTree = "<group>";
-		};
-		E99AA21A21A9CFFB007C8BC2 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				E99AA21B21A9D056007C8BC2 /* icon_status_connected@2x.png */,
-				E99AA21C21A9D056007C8BC2 /* icon_status_disconnected@2x.png */,
-			);
-			name = images;
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,9 +302,7 @@
 				E9395DD121A9BC0E0078CC5C /* WelcomePopup.xib in Resources */,
 				E9395D7421A8814C0078CC5C /* Assets.xcassets in Resources */,
 				E9395D7721A8814C0078CC5C /* MainMenu.xib in Resources */,
-				E99AA21E21A9D056007C8BC2 /* icon_status_disconnected@2x.png in Resources */,
 				E9648F4621A9D44C003BC4D6 /* AutoMute Helper.app in Resources */,
-				E99AA21D21A9D056007C8BC2 /* icon_status_connected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

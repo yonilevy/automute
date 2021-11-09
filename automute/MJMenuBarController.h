@@ -26,9 +26,6 @@
 
 - (void)showWelcomePopup;
 - (void)showLaunchAtLoginPopup;
-- (void)showHeadphonesDisconnectedMuteNotification;
-- (void)showSleepMuteNotification;
-- (void)showLockMuteNotification;
 - (void)updateMenuIcon:(BOOL)headphonesConnected;
 - (void)terminate;
 @end

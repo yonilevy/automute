@@ -19,7 +19,7 @@ static const NSInteger MENU_ITEM_DISABLE_12H = 203;
 static const NSInteger MENU_ITEM_DISABLE_24H = 204;
 static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
 
-@interface MJMenuBarController () <NSMenuDelegate, NSUserNotificationCenterDelegate>
+@interface MJMenuBarController () <NSMenuDelegate>
 @property(nonatomic, strong) MJUserDefaults *userDefaults;
 @property(nonatomic, strong) NSStatusItem *statusItem;
 @property(nonatomic, strong) YLStatusItemPopupDisplayer *popoverDisplayer;
@@ -213,40 +213,6 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     [self.userDefaults setSawLaunchAtLoginPopup];
     [self.popoverDisplayer hidePopoverWithAnimate:YES];
     [self.delegate menuBarController_setLaunchAtLogin:NO];
-}
-
-- (void)showHeadphonesDisconnectedMuteNotification
-{
-    [self showNotificationWithTitle:@"Headphones Disconnected" body:@"Sound Muted."];
-}
-
-- (void)showSleepMuteNotification
-{
-    [self showNotificationWithTitle:@"Woke up from sleep" body:@"Sound Muted."];
-}
-
-- (void)showLockMuteNotification
-{
-    [self showNotificationWithTitle:@"Unlocked" body:@"Sound Muted."];
-}
-
-- (void)showNotificationWithTitle:(NSString *)title
-                             body:(NSString *)body
-{
-    if (![self.userDefaults areMuteNotificationsEnabled]) return;
-
-    NSUserNotification *notification = [[NSUserNotification alloc] init];
-    notification.title = title;
-    notification.informativeText = body;
-
-    [NSUserNotificationCenter defaultUserNotificationCenter].delegate = self;
-    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
-}
-
-- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
-     shouldPresentNotification:(NSUserNotification *)notification
-{
-    return YES;
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem

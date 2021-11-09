@@ -6,12 +6,14 @@
 #import "StartAtLoginController.h"
 #import "MJSoundMuter.h"
 #import "MJConstants.h"
+#import "MJNotifier.h"
 
 @interface AppDelegate () <MJMenuBarControllerDelegate, MJDisableMuteManagerDelegate>
 
 @property (nonatomic) SoundMuter *soundMuter;
 @property (nonatomic) HeadPhoneDetector *headphoneDetector;
 @property (nonatomic, strong) MJUserDefaults *userDefaults;
+@property(nonatomic, strong) MJNotifier *notifier;
 @property(nonatomic, strong) MJMenuBarController *menuBarController;
 @property(nonatomic, strong) MJDisableMuteManager *disableMuteManager;
 @property(nonatomic, strong) StartAtLoginController *startAtLoginController;
@@ -31,6 +33,7 @@
     BOOL didLaunchAtLogin = [self checkAndClearDidLaunchAtLogin];
 
     self.userDefaults = [[MJUserDefaults alloc] init];
+    self.notifier = [[MJNotifier alloc] initWithUserDefaults:self.userDefaults];
     self.menuBarController = [[MJMenuBarController alloc] initWithUserDefaults:self.userDefaults delegate:self];
     self.disableMuteManager = [[MJDisableMuteManager alloc] initWithDelegate:self userDefaults:self.userDefaults];
     self.startAtLoginController = [[StartAtLoginController alloc] initWithIdentifier:MJ_HELPER_BUNDLE_ID];
@@ -94,7 +97,7 @@
 - (void)didWake
 {
     if (self.didMuteOnLastSleep) {
-        [self.menuBarController showSleepMuteNotification];
+        [self.notifier showSleepMuteNotification];
     }
 }
 
@@ -107,7 +110,7 @@
 - (void)didUnlock
 {
     if (self.didMuteOnLastLock) {
-        [self.menuBarController showLockMuteNotification];
+        [self.notifier showLockMuteNotification];
     }
 }
 
@@ -118,7 +121,7 @@
         __weak AppDelegate *weakSelf = self;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
             if ([weakSelf mute]) {
-                [weakSelf.menuBarController showHeadphonesDisconnectedMuteNotification];
+                [weakSelf.notifier showHeadphonesDisconnectedMuteNotification];
             }
         });
     }

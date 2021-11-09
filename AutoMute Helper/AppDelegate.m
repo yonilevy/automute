@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import "MJConstants.h"
 
 @implementation AppDelegate
 
@@ -12,8 +13,20 @@
 {
     NSString *appPath = [self buildTopAppPath];
     if (![self isAppAlreadyRunning:appPath]) {
+        // Using a shared user defaults to indicate to AutoMute that we launched it.
+        // AutoMute is responsible for clearing the mark upon launch.
+        // See: https://github.com/sindresorhus/LaunchAtLogin/issues/33#issuecomment-770006078
+        [self markDidLaunchAtLogin];
+
         [[NSWorkspace sharedWorkspace] launchApplication:appPath];
     }
+}
+
+- (void)markDidLaunchAtLogin
+{
+    NSUserDefaults *groupDefaults = [[NSUserDefaults alloc] initWithSuiteName:MJ_SHARED_GROUP_ID];
+    [groupDefaults setBool:YES forKey:MJ_DID_LAUNCH_AT_LOGIN_KEY];
+    [groupDefaults synchronize];
 }
 
 - (NSString *)buildTopAppPath

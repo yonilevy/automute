@@ -60,6 +60,7 @@
 /* Begin PBXFileReference section */
 		09DD11CF37E1CF049B022735 /* Pods-AutoMute.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoMute.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutoMute/Pods-AutoMute.release.xcconfig"; sourceTree = "<group>"; };
 		1A59824F770771BDC1915327 /* libPods-AutoMute.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AutoMute.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		38AF5A0769E262F90ABCE83E /* common */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; path = common; sourceTree = "<group>"; };
 		CB270DC6A3FDDBD8AB59966F /* Pods-automute.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-automute.release.xcconfig"; path = "Pods/Target Support Files/Pods-automute/Pods-automute.release.xcconfig"; sourceTree = "<group>"; };
 		E9395D6D21A8814B0078CC5C /* AutoMute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoMute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9395D7021A8814B0078CC5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 				E9395D6E21A8814B0078CC5C /* Products */,
 				AFAD487F13BFCA666CC92B83 /* Pods */,
 				64101B060F67BB2F84EBD6B2 /* Frameworks */,
+				38AF5A0769E262F90ABCE83E /* common */,
 			);
 			sourceTree = "<group>";
 		};
@@ -525,6 +527,12 @@
 					"$(inherited)",
 					"COCOAPODS=1",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/ObjectiveSugar\"",
+					"\"${SRCROOT}\"/common",
+				);
 				INFOPLIST_FILE = automute/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -549,6 +557,12 @@
 					"$(inherited)",
 					"COCOAPODS=1",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/ObjectiveSugar\"",
+					"\"${SRCROOT}\"/common",
+				);
 				INFOPLIST_FILE = automute/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -568,6 +582,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 26ZKW6U635;
+				HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/common";
 				INFOPLIST_FILE = "AutoMute Helper/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -587,6 +602,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 26ZKW6U635;
+				HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/common";
 				INFOPLIST_FILE = "AutoMute Helper/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

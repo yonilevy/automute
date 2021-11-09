@@ -5,6 +5,7 @@
 #import "MJDisableMuteManager.h"
 #import "StartAtLoginController.h"
 #import "MJSoundMuter.h"
+#import "MJConstants.h"
 
 @interface AppDelegate () <MJMenuBarControllerDelegate, MJDisableMuteManagerDelegate>
 
@@ -27,10 +28,16 @@
     self.soundMuter = new SoundMuter();
     self.headphoneDetector = new HeadPhoneDetector();
 
+    BOOL didLaunchAtLogin = [self checkAndClearDidLaunchAtLogin];
+
     self.userDefaults = [[MJUserDefaults alloc] init];
     self.menuBarController = [[MJMenuBarController alloc] initWithUserDefaults:self.userDefaults delegate:self];
     self.disableMuteManager = [[MJDisableMuteManager alloc] initWithDelegate:self userDefaults:self.userDefaults];
-    self.startAtLoginController = [[StartAtLoginController alloc] initWithIdentifier:@"com.yonilevy.automute.helper"];
+    self.startAtLoginController = [[StartAtLoginController alloc] initWithIdentifier:MJ_HELPER_BUNDLE_ID];
+
+    if (!didLaunchAtLogin) {
+        // TODO...
+    }
 
     __weak AppDelegate *weakSelf = self;
     self.headphoneDetector->listen(^(bool headphonesConnected) {
@@ -67,6 +74,15 @@
                selector:@selector(didUnlock)
                    name:@"com.apple.screenIsUnlocked"
                  object:nil];
+}
+
+- (BOOL)checkAndClearDidLaunchAtLogin
+{
+    NSUserDefaults *groupDefaults = [[NSUserDefaults alloc] initWithSuiteName:MJ_SHARED_GROUP_ID];
+    BOOL didLaunchAtLogin = [groupDefaults boolForKey:MJ_DID_LAUNCH_AT_LOGIN_KEY];
+    [groupDefaults setBool:NO forKey:MJ_DID_LAUNCH_AT_LOGIN_KEY];
+    [groupDefaults synchronize];
+    return didLaunchAtLogin;
 }
 
 - (void)willSleep

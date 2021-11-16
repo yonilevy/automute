@@ -68,7 +68,6 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     triggersItem.submenu = muteOnSubmenu;
     [menu addItem:triggersItem];
     [menu addItem:[self buildMenuItemWithTitle:@"Show Notifications" action:@selector(muteNotificationsToggled) tag:MENU_ITEM_MUTE_NOTIFICATIONS]];
-    [menu addItem:[self buildMenuItemWithTitle:@"Hide Menu Bar Icon" action:@selector(hideMenuBarIconToggled) tag:MENU_ITEM_HIDE_MENU_BAR_ICON]];
     [menu addItem:[NSMenuItem separatorItem]];
     [menu addItem:[self buildMenuItemWithTitle:@"Enable" action:@selector(enableMute) tag:MENU_ITEM_ENABLE_MUTING]];
     NSMenuItem *disableItem = [self buildMenuItemWithTitle:@"Disable" action:@selector(disableMutingTimeClicked:) tag:MENU_ITEM_DISABLE_MUTING];
@@ -82,6 +81,7 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     [menu addItem:disableItem];
 
     [menu addItem:[NSMenuItem separatorItem]];
+    [menu addItem:[self buildMenuItemWithTitle:@"Hide Menu Bar Icon" action:@selector(hideMenuBarIconToggled) tag:MENU_ITEM_HIDE_MENU_BAR_ICON]];
     [menu addItem:[self buildMenuItemWithTitle:@"Launch at Login" action:@selector(launchAtLoginToggled) tag:MENU_ITEM_LAUNCH_AT_LOGIN]];
     [menu addItem:[NSMenuItem separatorItem]];
     [menu addItem:[self buildMenuItemWithTitle:@"Quit" action:@selector(quit)]];

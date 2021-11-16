@@ -3,8 +3,13 @@
 #include <AssertMacros.h>
 #include <IOKit/audio/IOAudioTypes.h>
 
+#ifdef DEBUG
+#define DEBUG_TEST 1
+#else
+#define DEBUG_TEST 0
+#endif
 #define MJLOG(fmt, ...) \
-            do { if (DEBUG) printf(fmt, ##__VA_ARGS__); } while (0)
+            do { if (DEBUG_TEST) printf(fmt, ##__VA_ARGS__); } while (0)
 
 
 HeadPhoneDetector::HeadPhoneDetector() :

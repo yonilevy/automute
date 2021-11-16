@@ -16,16 +16,18 @@
 - (BOOL)menuBarController_isSetToMuteOnHeadphones;
 - (void)menuBarController_setMuteOnHeadphones:(BOOL)muteOnHeadphones;
 - (void)menuBarController_toggleMuteNotifications;
+- (void)menuBarController_toggleHideMenuBarIcon;
 @end
 
 
 @interface MJMenuBarController : NSObject
 
 - (instancetype)initWithUserDefaults:(MJUserDefaults *)userDefaults
-                            delegate:(id<MJMenuBarControllerDelegate>)delegate;
+                            delegate:(id<MJMenuBarControllerDelegate>)delegate
+                 headphonesConnected:(BOOL)headphonesConnected;
 
 - (void)showWelcomePopup;
 - (void)showLaunchAtLoginPopup;
 - (void)updateMenuIcon:(BOOL)headphonesConnected;
-- (void)terminate;
+- (void)forceRemoveFromMenuBar;
 @end

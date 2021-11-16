@@ -9,6 +9,7 @@ static NSString *const MUTE_ON_SLEEP = @"MUTE_ON_SLEEP";
 static NSString *const MUTE_ON_LOCK = @"MUTE_ON_LOCK";
 static NSString *const MUTE_ON_HEADPHONES = @"MUTE_ON_HEADPHONES";
 static NSString *const MUTE_NOTIFICATIONS_ENABLED = @"MUTE_NOTIFICATIONS_ENABLED";
+static NSString *const MENU_BAR_ICON_HIDDEN = @"MENU_BAR_ICON_HIDDEN";
 
 @interface MJUserDefaults ()
 @property(nonatomic, strong) NSUserDefaults *defaults;
@@ -25,7 +26,8 @@ static NSString *const MUTE_NOTIFICATIONS_ENABLED = @"MUTE_NOTIFICATIONS_ENABLED
             MUTE_ON_SLEEP: @(YES),
             MUTE_ON_LOCK: @(YES),
             MUTE_ON_HEADPHONES: @(YES),
-            MUTE_NOTIFICATIONS_ENABLED: @(YES)
+            MUTE_NOTIFICATIONS_ENABLED: @(YES),
+            MENU_BAR_ICON_HIDDEN: @(NO),
     }];
 
 
@@ -117,6 +119,17 @@ static NSString *const MUTE_NOTIFICATIONS_ENABLED = @"MUTE_NOTIFICATIONS_ENABLED
 - (void)setMuteNotificationsEnabled:(BOOL)muteNotificationsEnabled
 {
     [self.defaults setBool:muteNotificationsEnabled forKey:MUTE_NOTIFICATIONS_ENABLED];
+    [self.defaults synchronize];
+}
+
+- (BOOL)isMenuBarIconHidden
+{
+    return [self.defaults boolForKey:MENU_BAR_ICON_HIDDEN];
+}
+
+- (void)setMenuBarIconHidden:(BOOL)menuBarIconHidden
+{
+    [self.defaults setBool:menuBarIconHidden forKey:MENU_BAR_ICON_HIDDEN];
     [self.defaults synchronize];
 }
 

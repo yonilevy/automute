@@ -14,6 +14,7 @@
 @property (nonatomic) HeadPhoneDetector *headphoneDetector;
 @property (nonatomic, strong) MJUserDefaults *userDefaults;
 @property(nonatomic, strong) MJNotifier *notifier;
+// Note: nil when the menu bar icon is hidden.
 @property(nonatomic, strong) MJMenuBarController *menuBarController;
 @property(nonatomic, strong) MJDisableMuteManager *disableMuteManager;
 @property(nonatomic, strong) StartAtLoginController *startAtLoginController;
@@ -27,26 +28,30 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 //    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
-    self.soundMuter = new SoundMuter();
-    self.headphoneDetector = new HeadPhoneDetector();
 
     BOOL didLaunchAtLogin = [self checkAndClearDidLaunchAtLogin];
 
-    self.userDefaults = [[MJUserDefaults alloc] init];
+    self.soundMuter = new SoundMuter();
     self.notifier = [[MJNotifier alloc] initWithUserDefaults:self.userDefaults];
-    self.menuBarController = [[MJMenuBarController alloc] initWithUserDefaults:self.userDefaults delegate:self];
-    self.disableMuteManager = [[MJDisableMuteManager alloc] initWithDelegate:self userDefaults:self.userDefaults];
-    self.startAtLoginController = [[StartAtLoginController alloc] initWithIdentifier:MJ_HELPER_BUNDLE_ID];
 
-    if (!didLaunchAtLogin) {
-        // TODO...
-    }
-
+    self.headphoneDetector = new HeadPhoneDetector();
     __weak AppDelegate *weakSelf = self;
     self.headphoneDetector->listen(^(bool headphonesConnected) {
         [weakSelf onHeadphoneStateChangedTo:headphonesConnected];
     });
-    [self.menuBarController updateMenuIcon:self.headphoneDetector->areHeadphonesConnected()];
+
+    self.userDefaults = [[MJUserDefaults alloc] init];
+    // If the app was launched by the user (rather than auto launch
+    //  on login) -> force show the menu bar icon.
+    if (!didLaunchAtLogin) {
+        [self.userDefaults setMenuBarIconHidden:NO];
+    }
+
+    self.menuBarController = self.userDefaults.isMenuBarIconHidden
+            ? nil
+            : [self buildMenuBarController];
+    self.disableMuteManager = [[MJDisableMuteManager alloc] initWithDelegate:self userDefaults:self.userDefaults];
+    self.startAtLoginController = [[StartAtLoginController alloc] initWithIdentifier:MJ_HELPER_BUNDLE_ID];
 
     if (![self.userDefaults didSeeWelcomeScreen]) {
         [self.menuBarController showWelcomePopup];
@@ -79,6 +84,14 @@
                  object:nil];
 }
 
+- (MJMenuBarController *)buildMenuBarController
+{
+    return [[MJMenuBarController alloc]
+            initWithUserDefaults:self.userDefaults
+                        delegate:self
+             headphonesConnected:self.headphoneDetector->areHeadphonesConnected()];
+}
+
 - (BOOL)checkAndClearDidLaunchAtLogin
 {
     NSUserDefaults *groupDefaults = [[NSUserDefaults alloc] initWithSuiteName:MJ_SHARED_GROUP_ID];
@@ -86,6 +99,18 @@
     [groupDefaults setBool:NO forKey:MJ_DID_LAUNCH_AT_LOGIN_KEY];
     [groupDefaults synchronize];
     return didLaunchAtLogin;
+}
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
+{
+    // If the user relaunches the app -> force show the menu bar icon
+    //  (that's the only way to make it reappear).
+    if ([self.userDefaults isMenuBarIconHidden]) {
+        [self.userDefaults setMenuBarIconHidden:NO];
+        self.menuBarController = [self buildMenuBarController];
+    }
+
+    return NO;
 }
 
 - (void)willSleep
@@ -152,7 +177,6 @@
 {
     delete self.headphoneDetector;
     delete self.soundMuter;
-    [self.menuBarController terminate];
     [NSApp terminate:self];
 }
 
@@ -205,6 +229,18 @@
 - (void)menuBarController_toggleMuteNotifications
 {
     [self.userDefaults setMuteNotificationsEnabled:![self.userDefaults areMuteNotificationsEnabled]];
+}
+
+- (void)menuBarController_toggleHideMenuBarIcon
+{
+    if ([self.userDefaults isMenuBarIconHidden]) {
+        NSLog(@"Weird, how did you manage to toggle while hidden?");
+        return;
+    }
+
+    [self.userDefaults setMenuBarIconHidden:YES];
+    [self.menuBarController forceRemoveFromMenuBar];
+    self.menuBarController = nil;
 }
 
 @end

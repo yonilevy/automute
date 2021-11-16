@@ -12,6 +12,7 @@ static const NSInteger MENU_ITEM_MUTE_ON_SLEEP = 104;
 static const NSInteger MENU_ITEM_MUTE_ON_HEADPHONES = 105;
 static const NSInteger MENU_ITEM_MUTE_NOTIFICATIONS = 106;
 static const NSInteger MENU_ITEM_MUTE_ON_LOCK = 107;
+static const NSInteger MENU_ITEM_HIDE_MENU_BAR_ICON = 108;
 
 static const NSInteger MENU_ITEM_DISABLE_1H = 201;
 static const NSInteger MENU_ITEM_DISABLE_6H = 202;
@@ -30,6 +31,7 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
 
 - (instancetype)initWithUserDefaults:(MJUserDefaults *)userDefaults
                             delegate:(id<MJMenuBarControllerDelegate>)delegate
+                 headphonesConnected:(BOOL)headphonesConnected
 {
     self = [super init];
     if (!self) return nil;
@@ -37,16 +39,17 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     self.delegate = delegate;
     self.userDefaults = userDefaults;
 
-    [self createAndAddStatusBarItem];
+    [self createAndAddStatusBarItem:headphonesConnected];
     self.popoverDisplayer = [[YLStatusItemPopupDisplayer alloc] initWithStatusItem:self.statusItem];
 
     return self;
 }
 
-- (void)createAndAddStatusBarItem
+- (void)createAndAddStatusBarItem:(BOOL)headphonesConnected
 {
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     self.statusItem.menu = [self createMenuWithItems];
+    [self updateMenuIcon:headphonesConnected];
 }
 
 - (NSMenu *)createMenuWithItems
@@ -65,6 +68,7 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     triggersItem.submenu = muteOnSubmenu;
     [menu addItem:triggersItem];
     [menu addItem:[self buildMenuItemWithTitle:@"Show Notifications" action:@selector(muteNotificationsToggled) tag:MENU_ITEM_MUTE_NOTIFICATIONS]];
+    [menu addItem:[self buildMenuItemWithTitle:@"Hide Menu Bar Icon" action:@selector(hideMenuBarIconToggled) tag:MENU_ITEM_HIDE_MENU_BAR_ICON]];
     [menu addItem:[NSMenuItem separatorItem]];
     [menu addItem:[self buildMenuItemWithTitle:@"Enable" action:@selector(enableMute) tag:MENU_ITEM_ENABLE_MUTING]];
     NSMenuItem *disableItem = [self buildMenuItemWithTitle:@"Disable" action:@selector(disableMutingTimeClicked:) tag:MENU_ITEM_DISABLE_MUTING];
@@ -168,6 +172,11 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     [self.delegate menuBarController_toggleMuteNotifications];
 }
 
+- (void)hideMenuBarIconToggled
+{
+    [self.delegate menuBarController_toggleHideMenuBarIcon];
+}
+
 - (void)showWelcomePopup
 {
     NSArray *topLevelObjects;
@@ -240,6 +249,13 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
             menuItem.state = NSOffState;
         }
     }
+    if (menuItem.tag == MENU_ITEM_HIDE_MENU_BAR_ICON) {
+        if ([self.userDefaults isMenuBarIconHidden]) {
+            menuItem.state = NSOnState;
+        } else {
+            menuItem.state = NSOffState;
+        }
+    }
     if (menuItem.tag == MENU_ITEM_MUTE_ON_SLEEP) {
         menuItem.state = [self.delegate menuBarController_isSetToMuteOnSleep] ? NSOnState : NSOffState;
     }
@@ -273,11 +289,11 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     [self.delegate menuBarController_quit];
 }
 
-- (void)terminate
+- (void)forceRemoveFromMenuBar
 {
-    // Note: removed so that when quitting and relaunching the menu bar item
-    //  remains at the same position (otherwise, resets to leftmost)
-//    [[NSStatusBar systemStatusBar] removeStatusItem:self.statusItem];
+    // Note: this causes the menu bar item to lose its current position.
+    //  Next time it shows it'll reset to the leftmost position.
+    [[NSStatusBar systemStatusBar] removeStatusItem:self.statusItem];
 }
 
 @end

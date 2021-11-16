@@ -26,4 +26,7 @@
 
 - (BOOL)areMuteNotificationsEnabled;
 - (void)setMuteNotificationsEnabled:(BOOL)muteNotificationsEnabled;
+
+- (BOOL)isMenuBarIconHidden;
+- (void)setMenuBarIconHidden:(BOOL)menuBarIconHidden;
 @end

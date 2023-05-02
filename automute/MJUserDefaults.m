@@ -17,6 +17,16 @@ static NSString *const MENU_BAR_ICON_HIDDEN = @"MENU_BAR_ICON_HIDDEN";
 
 @implementation MJUserDefaults
 
++ (instancetype)shared
+{
+    static MJUserDefaults *instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[self alloc] init];
+    });
+    return instance;
+}
+
 - (instancetype)init {
     self = [super init];
     if (!self) return nil;

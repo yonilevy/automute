@@ -3,6 +3,8 @@
 
 @interface MJUserDefaults : NSObject
 
++ (instancetype)shared;
+
 -(void)setSawWelcomeScreen;
 -(BOOL)didSeeWelcomeScreen;
 

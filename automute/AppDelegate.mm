@@ -12,7 +12,6 @@
 
 @property (nonatomic) SoundMuter *soundMuter;
 @property (nonatomic) HeadPhoneDetector *headphoneDetector;
-@property (nonatomic, strong) MJUserDefaults *userDefaults;
 @property(nonatomic, strong) MJNotifier *notifier;
 // Note: nil when the menu bar icon is hidden.
 @property(nonatomic, strong) MJMenuBarController *menuBarController;
@@ -32,7 +31,7 @@
     BOOL didLaunchAtLogin = [self checkAndClearDidLaunchAtLogin];
 
     self.soundMuter = new SoundMuter();
-    self.notifier = [[MJNotifier alloc] initWithUserDefaults:self.userDefaults];
+    self.notifier = [[MJNotifier alloc] init];
 
     self.headphoneDetector = new HeadPhoneDetector();
     __weak AppDelegate *weakSelf = self;
@@ -40,22 +39,21 @@
         [weakSelf onHeadphoneStateChangedTo:headphonesConnected];
     });
 
-    self.userDefaults = [[MJUserDefaults alloc] init];
-    // If the app was launched by the user (rather than auto launch
-    //  on login) -> force show the menu bar icon.
+    /// If the app was launched by the user (rather than auto launch
+    ///  on login) -> force show the menu bar icon.
     if (!didLaunchAtLogin) {
-        [self.userDefaults setMenuBarIconHidden:NO];
+        [MJUserDefaults.shared setMenuBarIconHidden:NO];
     }
 
-    self.menuBarController = self.userDefaults.isMenuBarIconHidden
+    self.menuBarController = MJUserDefaults.shared.isMenuBarIconHidden
             ? nil
             : [self buildMenuBarController];
-    self.disableMuteManager = [[MJDisableMuteManager alloc] initWithDelegate:self userDefaults:self.userDefaults];
+    self.disableMuteManager = [[MJDisableMuteManager alloc] initWithDelegate:self];
     self.startAtLoginController = [[StartAtLoginController alloc] initWithIdentifier:MJ_HELPER_BUNDLE_ID];
 
-    if (![self.userDefaults didSeeWelcomeScreen]) {
+    if (!MJUserDefaults.shared.didSeeWelcomeScreen) {
         [self.menuBarController showWelcomePopup];
-    } else if (![self.userDefaults didSeeLaunchAtLoginPopup]) {
+    } else if (!MJUserDefaults.shared.didSeeLaunchAtLoginPopup) {
         [self.menuBarController showLaunchAtLoginPopup];
     }
 
@@ -86,10 +84,8 @@
 
 - (MJMenuBarController *)buildMenuBarController
 {
-    return [[MJMenuBarController alloc]
-            initWithUserDefaults:self.userDefaults
-                        delegate:self
-             headphonesConnected:self.headphoneDetector->areHeadphonesConnected()];
+    return [[MJMenuBarController alloc] initWithDelegate:self
+                                     headphonesConnected:self.headphoneDetector->areHeadphonesConnected()];
 }
 
 - (BOOL)checkAndClearDidLaunchAtLogin
@@ -105,8 +101,8 @@
 {
     // If the user relaunches the app -> force show the menu bar icon
     //  (that's the only way to make it reappear).
-    if ([self.userDefaults isMenuBarIconHidden]) {
-        [self.userDefaults setMenuBarIconHidden:NO];
+    if (MJUserDefaults.shared.isMenuBarIconHidden) {
+        [MJUserDefaults.shared setMenuBarIconHidden:NO];
         self.menuBarController = [self buildMenuBarController];
     }
 
@@ -222,32 +218,32 @@
 
 - (BOOL)menuBarController_isSetToMuteOnSleep
 {
-    return self.userDefaults.isSetToMuteOnSleep;
+    return MJUserDefaults.shared.isSetToMuteOnSleep;
 }
 
 - (void)menuBarController_setMuteOnSleep:(BOOL)muteOnSleep
 {
-    [self.userDefaults setMuteOnSleep:muteOnSleep];
+    [MJUserDefaults.shared setMuteOnSleep:muteOnSleep];
 }
 
 - (BOOL)menuBarController_isSetToMuteOnLock
 {
-    return self.userDefaults.isSetToMuteOnLock;
+    return MJUserDefaults.shared.isSetToMuteOnLock;
 }
 
 - (void)menuBarController_setMuteOnLock:(BOOL)muteOnLock
 {
-    [self.userDefaults setMuteOnLock:muteOnLock];
+    [MJUserDefaults.shared setMuteOnLock:muteOnLock];
 }
 
 - (BOOL)menuBarController_isSetToMuteOnHeadphones
 {
-    return self.userDefaults.isSetToMuteOnHeadphones;
+    return MJUserDefaults.shared.isSetToMuteOnHeadphones;
 }
 
 - (void)menuBarController_setMuteOnHeadphones:(BOOL)muteOnHeadphones
 {
-    [self.userDefaults setMuteOnHeadphones:muteOnHeadphones];
+    [MJUserDefaults.shared setMuteOnHeadphones:muteOnHeadphones];
 }
 
 - (void)disableMuteManager_updateDisabledMuting:(BOOL)isDisabled
@@ -258,17 +254,17 @@
 
 - (void)menuBarController_toggleMuteNotifications
 {
-    [self.userDefaults setMuteNotificationsEnabled:![self.userDefaults areMuteNotificationsEnabled]];
+    [MJUserDefaults.shared setMuteNotificationsEnabled:!MJUserDefaults.shared.areMuteNotificationsEnabled];
 }
 
 - (void)menuBarController_toggleHideMenuBarIcon
 {
-    if ([self.userDefaults isMenuBarIconHidden]) {
+    if (MJUserDefaults.shared.isMenuBarIconHidden) {
         NSLog(@"Weird, how did you manage to toggle while hidden?");
         return;
     }
 
-    [self.userDefaults setMenuBarIconHidden:YES];
+    [MJUserDefaults.shared setMenuBarIconHidden:YES];
     [self.menuBarController forceRemoveFromMenuBar];
     self.menuBarController = nil;
 }

@@ -21,7 +21,6 @@ static const NSInteger MENU_ITEM_DISABLE_24H = 204;
 static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
 
 @interface MJMenuBarController () <NSMenuDelegate>
-@property(nonatomic, strong) MJUserDefaults *userDefaults;
 @property(nonatomic, strong) NSStatusItem *statusItem;
 @property(nonatomic, strong) YLStatusItemPopupDisplayer *popoverDisplayer;
 @property(nonatomic, weak) id <MJMenuBarControllerDelegate> delegate;
@@ -29,15 +28,13 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
 
 @implementation MJMenuBarController
 
-- (instancetype)initWithUserDefaults:(MJUserDefaults *)userDefaults
-                            delegate:(id<MJMenuBarControllerDelegate>)delegate
-                 headphonesConnected:(BOOL)headphonesConnected
+- (instancetype)initWithDelegate:(id<MJMenuBarControllerDelegate>)delegate
+             headphonesConnected:(BOOL)headphonesConnected
 {
     self = [super init];
     if (!self) return nil;
 
     self.delegate = delegate;
-    self.userDefaults = userDefaults;
 
     [self createAndAddStatusBarItem:headphonesConnected];
     self.popoverDisplayer = [[YLStatusItemPopupDisplayer alloc] initWithStatusItem:self.statusItem];
@@ -192,7 +189,7 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
 
 - (void)welcomeGotItClicked
 {
-    [self.userDefaults setSawWelcomeScreen];
+    [MJUserDefaults.shared setSawWelcomeScreen];
     [self showLaunchAtLoginPopup];
 }
 
@@ -212,21 +209,21 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
 
 - (void)launchAtLoginYesClicked
 {
-    [self.userDefaults setSawLaunchAtLoginPopup];
+    [MJUserDefaults.shared setSawLaunchAtLoginPopup];
     [self.popoverDisplayer hidePopoverWithAnimate:YES];
     [self.delegate menuBarController_setLaunchAtLogin:YES];
 }
 
 - (void)launchAtLoginNoClicked
 {
-    [self.userDefaults setSawLaunchAtLoginPopup];
+    [MJUserDefaults.shared setSawLaunchAtLoginPopup];
     [self.popoverDisplayer hidePopoverWithAnimate:YES];
     [self.delegate menuBarController_setLaunchAtLogin:NO];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    if ([self.userDefaults isMutingDisabled]) {
+    if (MJUserDefaults.shared.isMutingDisabled) {
         if (menuItem.tag == MENU_ITEM_DISABLE_MUTING) {
             return NO;
         }
@@ -236,25 +233,13 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
         }
     }
     if (menuItem.tag == MENU_ITEM_LAUNCH_AT_LOGIN) {
-        if ([self.delegate menuBarController_isSetToLaunchAtLogin]) {
-            menuItem.state = NSOnState;
-        } else {
-            menuItem.state = NSOffState;
-        }
+        menuItem.state = [self.delegate menuBarController_isSetToLaunchAtLogin] ? NSOnState : NSOffState;
     }
     if (menuItem.tag == MENU_ITEM_MUTE_NOTIFICATIONS) {
-        if ([self.userDefaults areMuteNotificationsEnabled]) {
-            menuItem.state = NSOnState;
-        } else {
-            menuItem.state = NSOffState;
-        }
+        menuItem.state = MJUserDefaults.shared.areMuteNotificationsEnabled ? NSOnState : NSOffState;
     }
     if (menuItem.tag == MENU_ITEM_HIDE_MENU_BAR_ICON) {
-        if ([self.userDefaults isMenuBarIconHidden]) {
-            menuItem.state = NSOnState;
-        } else {
-            menuItem.state = NSOffState;
-        }
+        menuItem.state = MJUserDefaults.shared.isMenuBarIconHidden ? NSOnState : NSOffState;
     }
     if (menuItem.tag == MENU_ITEM_MUTE_ON_SLEEP) {
         menuItem.state = [self.delegate menuBarController_isSetToMuteOnSleep] ? NSOnState : NSOffState;
@@ -276,7 +261,7 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
 
 - (NSImage *)generateMenuIconImage:(BOOL)headphonesConnected
 {
-    if ([self.userDefaults isMutingDisabled]) {
+    if (MJUserDefaults.shared.isMutingDisabled) {
         return [[NSImage imageNamed:headphonesConnected ? @"hp_connected" : @"hp_disconnected_noalpha"]
                 imageTintedWithColor:[NSColor colorWithRed:1 green:0.3 blue:0.2 alpha:1.0]];
     } else {

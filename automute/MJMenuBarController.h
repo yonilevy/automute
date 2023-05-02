@@ -1,8 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
-@class MJUserDefaults;
-
 @protocol MJMenuBarControllerDelegate
 - (void)menuBarController_disableMutingFor:(NSInteger)hours;
 - (void)menuBarController_enableMuting;
@@ -22,9 +20,8 @@
 
 @interface MJMenuBarController : NSObject
 
-- (instancetype)initWithUserDefaults:(MJUserDefaults *)userDefaults
-                            delegate:(id<MJMenuBarControllerDelegate>)delegate
-                 headphonesConnected:(BOOL)headphonesConnected;
+- (instancetype)initWithDelegate:(id<MJMenuBarControllerDelegate>)delegate
+             headphonesConnected:(BOOL)headphonesConnected;
 
 - (void)showWelcomePopup;
 - (void)showLaunchAtLoginPopup;

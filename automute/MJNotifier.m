@@ -2,20 +2,10 @@
 #import "MJUserDefaults.h"
 
 @interface MJNotifier() <NSUserNotificationCenterDelegate>
-@property(nonatomic, strong) MJUserDefaults *userDefaults;
+/// Empty.
 @end
 
 @implementation MJNotifier
-
-- (instancetype)initWithUserDefaults:(MJUserDefaults *)userDefaults
-{
-    self = [super init];
-    if (!self) return nil;
-
-    self.userDefaults = userDefaults;
-
-    return self;
-}
 
 - (void)showHeadphonesDisconnectedMuteNotification
 {
@@ -35,7 +25,7 @@
 - (void)showNotificationWithTitle:(NSString *)title
                              body:(NSString *)body
 {
-    if (![self.userDefaults areMuteNotificationsEnabled]) return;
+    if (!MJUserDefaults.shared.areMuteNotificationsEnabled) return;
 
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = title;

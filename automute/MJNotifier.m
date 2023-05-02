@@ -7,6 +7,16 @@
 
 @implementation MJNotifier
 
+- (instancetype)init
+{
+    self = [super init];
+    if (!self) return nil;
+
+    NSUserNotificationCenter.defaultUserNotificationCenter.delegate = self;
+
+    return self;
+}
+
 - (void)showHeadphonesDisconnectedMuteNotification
 {
     [self showNotificationWithTitle:@"Headphones Disconnected" body:@"Sound Muted."];
@@ -31,8 +41,7 @@
     notification.title = title;
     notification.informativeText = body;
 
-    [NSUserNotificationCenter defaultUserNotificationCenter].delegate = self;
-    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    [NSUserNotificationCenter.defaultUserNotificationCenter deliverNotification:notification];
 }
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center

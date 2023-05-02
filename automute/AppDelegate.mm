@@ -143,13 +143,43 @@
 {
     [self.menuBarController updateMenuIcon:connected];
     if (!connected && [self menuBarController_isSetToMuteOnHeadphones]) {
+        /// - Here lies an OS weirdness: the output device has "officially" changed, but
+        ///     attempting to mute it at this stage will fail. It seems to take the OS a short while
+        ///     (lets call it T) before volume changes actually apply to the new device.
+        /// - That time T varies widely (3X ; tens of milliseconds) depending on the specific
+        ///     headphone model. For example, T(AirPods Pro 2) >> T(Sony WH-1000XM4) ¯\_(ツ)_/¯.
+        /// - There is no way for us to query the OS whether T passed already (AFAIK).
+        ///
+        /// - So: if we mute too early, our mute has no effect and we fail entirely,
+        ///     while if we mute too late, the Mac speakers would manage to produce some audible noise
+        ///     prior to our mute -> a smaller but still very significant fail.
+        ///
+        /// - The only reasonable approach therefore is to try and mute many times, with tiny
+        ///     intervals between attempts. That way we bring the late-mute delay to a minimum
+        ///     (in practice, zero audible noise) while also ~never failing to mute by being too early.
         __weak AppDelegate *weakSelf = self;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            if ([weakSelf mute]) {
-                [weakSelf.notifier showHeadphonesDisconnectedMuteNotification];
-            }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf tryMuteWithNumAttempts:30 attemptIntervalyMs:10];
         });
     }
+}
+
+- (void)tryMuteWithNumAttempts:(int)attemptsLeft attemptIntervalyMs:(int64_t)intervalMs
+{
+    if (![self mute]) {
+        return;
+    }
+
+    /// This is the last attempt, we assume we succeeded by now, time to show the notification.
+    if (attemptsLeft <= 1) {
+        [self.notifier showHeadphonesDisconnectedMuteNotification];
+        return;
+    }
+
+    __weak AppDelegate *weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, intervalMs * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+        [weakSelf tryMuteWithNumAttempts:attemptsLeft - 1 attemptIntervalyMs:intervalMs];
+    });
 }
 
 - (BOOL)mute

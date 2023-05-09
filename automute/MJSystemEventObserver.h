@@ -6,6 +6,7 @@ typedef NS_ENUM(NSInteger, MJSystemEvent) {
     /// In reverse order of precedence for notification.
     MJSystemEventLock,
     MJSystemEventSleep,
+    MJSystemEventPowerOff,
 };
 
 @protocol MJSystemEventHandlerDelegate

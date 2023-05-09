@@ -59,7 +59,7 @@ static const NSInteger MENU_ITEM_DISABLE_FOREVER = 205;
     [menu addItem:[NSMenuItem separatorItem]];
     NSMenuItem *triggersItem = [self buildMenuItemWithTitle:@"Mute Triggers" action:nil];
     NSMenu *muteOnSubmenu = [[NSMenu alloc] init];
-    [muteOnSubmenu addItem:[self buildMenuItemWithTitle:@"Mac Goes to Sleep" action:@selector(muteOnSleepToggled) tag:MENU_ITEM_MUTE_ON_SLEEP]];
+    [muteOnSubmenu addItem:[self buildMenuItemWithTitle:@"Mac Goes to Sleep / Powers Off" action:@selector(muteOnSleepToggled) tag:MENU_ITEM_MUTE_ON_SLEEP]];
     [muteOnSubmenu addItem:[self buildMenuItemWithTitle:@"Mac Gets Locked / Enters Screen Saver" action:@selector(muteOnLockToggled) tag:MENU_ITEM_MUTE_ON_LOCK]];
     [muteOnSubmenu addItem:[self buildMenuItemWithTitle:@"Headphones Disconnected" action:@selector(muteOnHeadphonesToggled) tag:MENU_ITEM_MUTE_ON_HEADPHONES]];
     triggersItem.submenu = muteOnSubmenu;

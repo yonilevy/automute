@@ -44,6 +44,12 @@
                selector:@selector(didUnlock)
                    name:@"com.apple.screenIsUnlocked"
                  object:nil];
+
+    [[[NSWorkspace sharedWorkspace] notificationCenter]
+            addObserver:self
+               selector:@selector(willPowerOff)
+                   name:NSWorkspaceWillPowerOffNotification
+                 object:nil];
 }
 
 - (void)willSleep
@@ -64,6 +70,11 @@
 - (void)didUnlock
 {
     [self handleExitEvent:MJSystemEventLock];
+}
+
+- (void)willPowerOff
+{
+    [self handleEnterEvent:MJSystemEventPowerOff];
 }
 
 - (void)handleEnterEvent:(MJSystemEvent)event

@@ -114,6 +114,7 @@
         case MJSystemEventNone: return false;
         case MJSystemEventSleep: return MJUserDefaults.shared.isSetToMuteOnSleep;
         case MJSystemEventLock: return MJUserDefaults.shared.isSetToMuteOnLock;
+        case MJSystemEventPowerOff: return MJUserDefaults.shared.isSetToMuteOnSleep;
     }
 }
 
@@ -123,6 +124,7 @@
         case MJSystemEventNone: return 0.0;
         case MJSystemEventSleep: return 0.5;
         case MJSystemEventLock: return 0.3;
+        case MJSystemEventPowerOff: return 0.0;
     }
 }
 
@@ -130,6 +132,7 @@
 {
     switch (event) {
         case MJSystemEventNone:
+        case MJSystemEventPowerOff:
             break;
         case MJSystemEventSleep:
             [self.notifier showSleepMuteNotification];

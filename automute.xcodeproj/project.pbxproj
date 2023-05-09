@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		38AF50990AF835E1BC5E1431 /* MJNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AF5929698FD19C2E647421 /* MJNotifier.m */; };
+		38AF58654F44762DAF3EEBBB /* MJSystemEventObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AF5A7F00F66889900A5FDF /* MJSystemEventObserver.m */; };
 		A0B69452D9CA5750B10BAAC0 /* libPods-AutoMute.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A59824F770771BDC1915327 /* libPods-AutoMute.a */; };
 		E9395D7421A8814C0078CC5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9395D7321A8814C0078CC5C /* Assets.xcassets */; };
 		E9395D7721A8814C0078CC5C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9395D7521A8814C0078CC5C /* MainMenu.xib */; };
@@ -61,9 +62,11 @@
 /* Begin PBXFileReference section */
 		09DD11CF37E1CF049B022735 /* Pods-AutoMute.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoMute.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutoMute/Pods-AutoMute.release.xcconfig"; sourceTree = "<group>"; };
 		1A59824F770771BDC1915327 /* libPods-AutoMute.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AutoMute.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		38AF50A7B59A4212174FC951 /* MJSystemEventObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJSystemEventObserver.h; sourceTree = "<group>"; };
 		38AF573755AB0EBBCB3134FD /* MJNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJNotifier.h; sourceTree = "<group>"; };
 		38AF5929698FD19C2E647421 /* MJNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJNotifier.m; sourceTree = "<group>"; };
 		38AF5A0769E262F90ABCE83E /* common */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; path = common; sourceTree = "<group>"; };
+		38AF5A7F00F66889900A5FDF /* MJSystemEventObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJSystemEventObserver.m; sourceTree = "<group>"; };
 		CB270DC6A3FDDBD8AB59966F /* Pods-automute.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-automute.release.xcconfig"; path = "Pods/Target Support Files/Pods-automute/Pods-automute.release.xcconfig"; sourceTree = "<group>"; };
 		E9395D6D21A8814B0078CC5C /* AutoMute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoMute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9395D7021A8814B0078CC5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -206,6 +209,8 @@
 				E9395D7B21A8814C0078CC5C /* automute.entitlements */,
 				38AF5929698FD19C2E647421 /* MJNotifier.m */,
 				38AF573755AB0EBBCB3134FD /* MJNotifier.h */,
+				38AF5A7F00F66889900A5FDF /* MJSystemEventObserver.m */,
+				38AF50A7B59A4212174FC951 /* MJSystemEventObserver.h */,
 			);
 			path = automute;
 			sourceTree = "<group>";
@@ -367,6 +372,7 @@
 				E9395DD521A9BC0E0078CC5C /* LaunchAtLoginPopupView.m in Sources */,
 				E9395DEA21A9BC590078CC5C /* NSImage+YLUtil.m in Sources */,
 				38AF50990AF835E1BC5E1431 /* MJNotifier.m in Sources */,
+				38AF58654F44762DAF3EEBBB /* MJSystemEventObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

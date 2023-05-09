@@ -7,8 +7,9 @@
 #import "MJSoundMuter.h"
 #import "MJConstants.h"
 #import "MJNotifier.h"
+#import "MJSystemEventObserver.h"
 
-@interface AppDelegate () <MJMenuBarControllerDelegate, MJDisableMuteManagerDelegate>
+@interface AppDelegate () <MJMenuBarControllerDelegate, MJDisableMuteManagerDelegate, MJSystemEventHandlerDelegate>
 
 @property (nonatomic) SoundMuter *soundMuter;
 @property (nonatomic) HeadPhoneDetector *headphoneDetector;
@@ -18,8 +19,7 @@
 @property(nonatomic, strong) MJDisableMuteManager *disableMuteManager;
 @property(nonatomic, strong) StartAtLoginController *startAtLoginController;
 @property(nonatomic) BOOL isMutingDisabled;
-@property(nonatomic) BOOL didMuteOnLastSleep;
-@property(nonatomic) BOOL didMuteOnLastLock;
+@property(nonatomic, strong) MJSystemEventObserver *systemEventObserver;
 @end
 
 @implementation AppDelegate
@@ -50,6 +50,7 @@
             : [self buildMenuBarController];
     self.disableMuteManager = [[MJDisableMuteManager alloc] initWithDelegate:self];
     self.startAtLoginController = [[StartAtLoginController alloc] initWithIdentifier:MJ_HELPER_BUNDLE_ID];
+    self.systemEventObserver = [[MJSystemEventObserver alloc] initWithDelegate:self];
 
     if (!MJUserDefaults.shared.didSeeWelcomeScreen) {
         [self.menuBarController showWelcomePopup];
@@ -57,29 +58,7 @@
         [self.menuBarController showLaunchAtLoginPopup];
     }
 
-    [[[NSWorkspace sharedWorkspace] notificationCenter]
-            addObserver:self
-               selector:@selector(willSleep)
-                   name:NSWorkspaceWillSleepNotification
-                 object:nil];
-
-    [[[NSWorkspace sharedWorkspace] notificationCenter]
-            addObserver:self
-               selector:@selector(didWake)
-                   name:NSWorkspaceDidWakeNotification
-                 object:nil];
-
-    [[NSDistributedNotificationCenter defaultCenter]
-            addObserver:self
-               selector:@selector(didLock)
-                   name:@"com.apple.screenIsLocked"
-                 object:nil];
-
-    [[NSDistributedNotificationCenter defaultCenter]
-            addObserver:self
-               selector:@selector(didUnlock)
-                   name:@"com.apple.screenIsUnlocked"
-                 object:nil];
+    [self.systemEventObserver start];
 }
 
 - (MJMenuBarController *)buildMenuBarController
@@ -109,29 +88,55 @@
     return NO;
 }
 
-- (void)willSleep
+- (BOOL)systemEventsHandler_muteIfAppropriateForEvent:(MJSystemEvent)event
 {
-    self.didMuteOnLastSleep =
-            [self menuBarController_isSetToMuteOnSleep] && !self.headphoneDetector->areHeadphonesConnected() && [self mute];
-}
-
-- (void)didWake
-{
-    if (self.didMuteOnLastSleep) {
-        [self.notifier showSleepMuteNotification];
+    if ([self doesUserWantMuteOnEvent:event] && !self.headphoneDetector->areHeadphonesConnected()) {
+        return [self tryMute];
+    } else {
+        return false;
     }
 }
 
-- (void)didLock
+- (void)systemEventsHandler_notifyMutedOnEvent:(MJSystemEvent)event
 {
-    self.didMuteOnLastLock =
-            [self menuBarController_isSetToMuteOnLock] && !self.headphoneDetector->areHeadphonesConnected() && [self mute];
+    /// We use a bit of delay to decrease the chance the OS isn't ready
+    /// to display notifications. (happens a lot e.g. on manual sleep -> awake).
+    __weak AppDelegate *weakSelf = self;
+    int64_t delay = static_cast<int64_t>([self notificationDelayForEvent:event] * NSEC_PER_SEC);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+        [weakSelf showNotificationForEvent:event];
+    });
 }
 
-- (void)didUnlock
+- (BOOL)doesUserWantMuteOnEvent:(MJSystemEvent)event
 {
-    if (self.didMuteOnLastLock) {
-        [self.notifier showLockMuteNotification];
+    switch (event) {
+        case MJSystemEventNone: return false;
+        case MJSystemEventSleep: return MJUserDefaults.shared.isSetToMuteOnSleep;
+        case MJSystemEventLock: return MJUserDefaults.shared.isSetToMuteOnLock;
+    }
+}
+
+- (NSTimeInterval)notificationDelayForEvent:(MJSystemEvent)event
+{
+    switch (event) {
+        case MJSystemEventNone: return 0.0;
+        case MJSystemEventSleep: return 0.5;
+        case MJSystemEventLock: return 0.3;
+    }
+}
+
+- (void)showNotificationForEvent:(MJSystemEvent)event
+{
+    switch (event) {
+        case MJSystemEventNone:
+            break;
+        case MJSystemEventSleep:
+            [self.notifier showSleepMuteNotification];
+            break;
+        case MJSystemEventLock:
+            [self.notifier showLockMuteNotification];
+            break;
     }
 }
 
@@ -162,7 +167,7 @@
 
 - (void)tryMuteWithNumAttempts:(int)attemptsLeft attemptIntervalyMs:(int64_t)intervalMs
 {
-    if (![self mute]) {
+    if (![self tryMute]) {
         return;
     }
 
@@ -178,7 +183,7 @@
     });
 }
 
-- (BOOL)mute
+- (BOOL)tryMute
 {
     if (self.isMutingDisabled) return false;
 

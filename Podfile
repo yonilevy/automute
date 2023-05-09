@@ -1,4 +1,4 @@
-platform :osx, '10.10'
+platform :osx, '10.13'
 
 # ignore all warnings from all pods
 inhibit_all_warnings!

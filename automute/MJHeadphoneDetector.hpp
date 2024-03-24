@@ -15,7 +15,6 @@ public:
     bool areHeadphonesConnected();
 
 private:
-    std::vector<AudioDeviceID> fetchAllDevices();
     bool isDeviceHeadphones(UInt32 deviceId);
     void onChangeDetected(HeadPhoneDetector::OnHeadphoneChangeBlock listenerBlock);
     void deviceListen(AudioDeviceID deviceId, AudioObjectPropertyListenerBlock block);

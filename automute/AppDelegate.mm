@@ -4,14 +4,14 @@
 #import "MJUserDefaults.h"
 #import "MJDisableMuteManager.h"
 #import "StartAtLoginController.h"
-#import "MJSoundMuter.h"
 #import "MJConstants.h"
 #import "MJNotifier.h"
 #import "MJSystemEventObserver.h"
+#import "MJAudioUtils.hpp"
+#import "MJLog.h"
 
 @interface AppDelegate () <MJMenuBarControllerDelegate, MJDisableMuteManagerDelegate, MJSystemEventHandlerDelegate>
 
-@property (nonatomic) SoundMuter *soundMuter;
 @property (nonatomic) HeadPhoneDetector *headphoneDetector;
 @property(nonatomic, strong) MJNotifier *notifier;
 // Note: nil when the menu bar icon is hidden.
@@ -30,7 +30,6 @@
 
     BOOL didLaunchAtLogin = [self checkAndClearDidLaunchAtLogin];
 
-    self.soundMuter = new SoundMuter();
     self.notifier = [[MJNotifier alloc] init];
 
     self.headphoneDetector = new HeadPhoneDetector();
@@ -90,8 +89,8 @@
 
 - (BOOL)systemEventsHandler_muteIfAppropriateForEvent:(MJSystemEvent)event
 {
-    if ([self doesUserWantMuteOnEvent:event] && !self.headphoneDetector->areHeadphonesConnected()) {
-        return [self tryMute];
+    if ([self doesUserWantMuteOnEvent:event]) {
+        return [self tryMuteAllOutputDevices];
     } else {
         return false;
     }
@@ -163,14 +162,14 @@
         ///     (in practice, zero audible noise) while also ~never failing to mute by being too early.
         __weak AppDelegate *weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf tryMuteWithNumAttempts:30 attemptIntervalyMs:10];
+            [weakSelf tryMuteDefaultOutputDeviceWithNumAttempts:30 attemptIntervalyMs:10];
         });
     }
 }
 
-- (void)tryMuteWithNumAttempts:(int)attemptsLeft attemptIntervalyMs:(int64_t)intervalMs
+- (void)tryMuteDefaultOutputDeviceWithNumAttempts:(int)attemptsLeft attemptIntervalyMs:(int64_t)intervalMs
 {
-    if (![self tryMute]) {
+    if (![self tryMuteDefaultOutputDevice]) {
         return;
     }
 
@@ -182,15 +181,30 @@
 
     __weak AppDelegate *weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, intervalMs * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-        [weakSelf tryMuteWithNumAttempts:attemptsLeft - 1 attemptIntervalyMs:intervalMs];
+        [weakSelf tryMuteDefaultOutputDeviceWithNumAttempts:attemptsLeft - 1 attemptIntervalyMs:intervalMs];
     });
 }
 
-- (BOOL)tryMute
+- (BOOL)tryMuteDefaultOutputDevice
 {
     if (self.isMutingDisabled) return false;
 
-    self.soundMuter->mute();
+    OSStatus res = AudioUtils::mute(AudioUtils::fetchDefaultOutputDeviceId());
+    MJLOG("Mute default output device -> %d\n", res);
+
+    return true;
+}
+
+- (BOOL)tryMuteAllOutputDevices
+{
+    if (self.isMutingDisabled) return false;
+
+    MJLOG("Mute all output devices:\n");
+    for (const auto& deviceId : AudioUtils::fetchAllOutputDeviceIds()) {
+        OSStatus res = AudioUtils::mute(deviceId);
+        MJLOG("\tMute device %u -> %d\n", deviceId, res);
+    }
+
     return true;
 }
 
@@ -210,7 +224,6 @@
 - (void)menuBarController_quit
 {
     delete self.headphoneDetector;
-    delete self.soundMuter;
     [NSApp terminate:self];
 }
 

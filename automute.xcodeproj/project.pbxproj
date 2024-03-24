@@ -25,7 +25,6 @@
 		E9395DD521A9BC0E0078CC5C /* LaunchAtLoginPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9395DCD21A9BC0E0078CC5C /* LaunchAtLoginPopupView.m */; };
 		E9395DE421A9BC590078CC5C /* YLStatusItemPopupDisplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E9395DD621A9BC570078CC5C /* YLStatusItemPopupDisplayer.m */; };
 		E9395DE521A9BC590078CC5C /* MJUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = E9395DD721A9BC580078CC5C /* MJUserDefaults.m */; };
-		E9395DE621A9BC590078CC5C /* MJSoundMuter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9395DDD21A9BC580078CC5C /* MJSoundMuter.cpp */; };
 		E9395DE721A9BC590078CC5C /* MJDisableMuteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E9395DDE21A9BC580078CC5C /* MJDisableMuteManager.m */; };
 		E9395DE821A9BC590078CC5C /* MJHeadphoneDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9395DE021A9BC580078CC5C /* MJHeadphoneDetector.cpp */; };
 		E9395DE921A9BC590078CC5C /* MJMenuBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9395DE221A9BC580078CC5C /* MJMenuBarController.m */; };
@@ -34,6 +33,7 @@
 		E9395DEE21A9BDF60078CC5C /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9395DED21A9BDF60078CC5C /* CoreAudio.framework */; };
 		E9648F4621A9D44C003BC4D6 /* AutoMute Helper.app in Resources */ = {isa = PBXBuildFile; fileRef = E9395DB121A9B91B0078CC5C /* AutoMute Helper.app */; };
 		E9648F4921A9D64A003BC4D6 /* AutoMute Helper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = E9395DB121A9B91B0078CC5C /* AutoMute Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E9A142622BA4E8C900647D1E /* MJAudioUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9A142602BA4E8C900647D1E /* MJAudioUtils.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,9 +97,7 @@
 		E9395DD821A9BC580078CC5C /* MJDisableMuteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJDisableMuteManager.h; sourceTree = "<group>"; };
 		E9395DD921A9BC580078CC5C /* MJMenuBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJMenuBarController.h; sourceTree = "<group>"; };
 		E9395DDA21A9BC580078CC5C /* NSImage+YLUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+YLUtil.h"; sourceTree = "<group>"; };
-		E9395DDB21A9BC580078CC5C /* MJSoundMuter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJSoundMuter.h; sourceTree = "<group>"; };
 		E9395DDC21A9BC580078CC5C /* MJUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJUserDefaults.h; sourceTree = "<group>"; };
-		E9395DDD21A9BC580078CC5C /* MJSoundMuter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MJSoundMuter.cpp; sourceTree = "<group>"; };
 		E9395DDE21A9BC580078CC5C /* MJDisableMuteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJDisableMuteManager.m; sourceTree = "<group>"; };
 		E9395DDF21A9BC580078CC5C /* MJHeadphoneDetector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MJHeadphoneDetector.hpp; sourceTree = "<group>"; };
 		E9395DE021A9BC580078CC5C /* MJHeadphoneDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MJHeadphoneDetector.cpp; sourceTree = "<group>"; };
@@ -108,6 +106,9 @@
 		E9395DE321A9BC580078CC5C /* NSImage+YLUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+YLUtil.m"; sourceTree = "<group>"; };
 		E9395DEB21A9BDEE0078CC5C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		E9395DED21A9BDF60078CC5C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		E9A142602BA4E8C900647D1E /* MJAudioUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MJAudioUtils.cpp; sourceTree = "<group>"; };
+		E9A142612BA4E8C900647D1E /* MJAudioUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MJAudioUtils.hpp; sourceTree = "<group>"; };
+		E9A142632BA4EE7000647D1E /* MJLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJLog.h; sourceTree = "<group>"; };
 		ED523A2C6D19073018415E8C /* Pods-AutoMute.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoMute.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutoMute/Pods-AutoMute.debug.xcconfig"; sourceTree = "<group>"; };
 		FD160341B91BE82FF452A10A /* Pods-automute.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-automute.debug.xcconfig"; path = "Pods/Target Support Files/Pods-automute/Pods-automute.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,8 +185,6 @@
 				E9395DDF21A9BC580078CC5C /* MJHeadphoneDetector.hpp */,
 				E9395DD921A9BC580078CC5C /* MJMenuBarController.h */,
 				E9395DE221A9BC580078CC5C /* MJMenuBarController.m */,
-				E9395DDD21A9BC580078CC5C /* MJSoundMuter.cpp */,
-				E9395DDB21A9BC580078CC5C /* MJSoundMuter.h */,
 				E9395DDC21A9BC580078CC5C /* MJUserDefaults.h */,
 				E9395DD721A9BC580078CC5C /* MJUserDefaults.m */,
 				E9395DDA21A9BC580078CC5C /* NSImage+YLUtil.h */,
@@ -211,6 +210,9 @@
 				38AF573755AB0EBBCB3134FD /* MJNotifier.h */,
 				38AF5A7F00F66889900A5FDF /* MJSystemEventObserver.m */,
 				38AF50A7B59A4212174FC951 /* MJSystemEventObserver.h */,
+				E9A142602BA4E8C900647D1E /* MJAudioUtils.cpp */,
+				E9A142612BA4E8C900647D1E /* MJAudioUtils.hpp */,
+				E9A142632BA4EE7000647D1E /* MJLog.h */,
 			);
 			path = automute;
 			sourceTree = "<group>";
@@ -359,6 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9A142622BA4E8C900647D1E /* MJAudioUtils.cpp in Sources */,
 				E9395DE721A9BC590078CC5C /* MJDisableMuteManager.m in Sources */,
 				E9395DE921A9BC590078CC5C /* MJMenuBarController.m in Sources */,
 				E9395DCF21A9BC0E0078CC5C /* WelcomePopupView.m in Sources */,
@@ -366,7 +369,6 @@
 				E9395D7A21A8814C0078CC5C /* main.m in Sources */,
 				E9395DC421A9BB220078CC5C /* StartAtLoginController.m in Sources */,
 				E9395DD421A9BC0E0078CC5C /* AppDelegate.mm in Sources */,
-				E9395DE621A9BC590078CC5C /* MJSoundMuter.cpp in Sources */,
 				E9395DE421A9BC590078CC5C /* YLStatusItemPopupDisplayer.m in Sources */,
 				E9395DE821A9BC590078CC5C /* MJHeadphoneDetector.cpp in Sources */,
 				E9395DD521A9BC0E0078CC5C /* LaunchAtLoginPopupView.m in Sources */,

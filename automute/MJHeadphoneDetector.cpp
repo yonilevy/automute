@@ -2,14 +2,8 @@
 
 #include <AssertMacros.h>
 #include <IOKit/audio/IOAudioTypes.h>
-
-#ifdef DEBUG
-#define DEBUG_TEST 1
-#else
-#define DEBUG_TEST 0
-#endif
-#define MJLOG(fmt, ...) \
-            do { if (DEBUG_TEST) printf(fmt, ##__VA_ARGS__); } while (0)
+#include "MJAudioUtils.hpp"
+#include "MJLog.h"
 
 
 HeadPhoneDetector::HeadPhoneDetector() :
@@ -31,7 +25,7 @@ void HeadPhoneDetector::listen(HeadPhoneDetector::OnHeadphoneChangeBlock listene
 
     propAddress.mSelector = kAudioDevicePropertyDataSource;
     propAddress.mScope = kAudioObjectPropertyScopeOutput;
-    std::vector<AudioDeviceID> devices(fetchAllDevices());
+    std::vector<AudioDeviceID> devices(AudioUtils::fetchAllOutputDeviceIds());
     for (auto it = devices.begin() ; it != devices.end() ; ++it) {
         AudioDeviceID deviceId = *it;
         AudioObjectAddPropertyListenerBlock(deviceId, &propAddress, nullptr, onChangeDetectedBlock);
@@ -67,30 +61,9 @@ void HeadPhoneDetector::deviceListen(AudioDeviceID deviceId, AudioObjectProperty
     delete[] streamIds;
 }
 
-std::vector<AudioDeviceID> HeadPhoneDetector::fetchAllDevices()
-{
-    UInt32 propSize;
-    
-    AudioObjectPropertyAddress propertyAddress = {
-        kAudioHardwarePropertyDevices,
-        kAudioObjectPropertyScopeOutput,
-        kAudioObjectPropertyElementMaster
-    };
-    
-    __Verify_noErr(AudioObjectGetPropertyDataSize(kAudioObjectSystemObject, &propertyAddress, 0, NULL, &propSize));
-    int numDevices = propSize / sizeof(AudioDeviceID);
-    
-    AudioDeviceID *deviceIds = new AudioDeviceID[numDevices];
-    __Verify_noErr(AudioObjectGetPropertyData(kAudioObjectSystemObject, &propertyAddress, 0, NULL, &propSize, deviceIds));
-    
-    std::vector<AudioDeviceID> res(deviceIds, deviceIds + numDevices);
-    delete[] deviceIds;
-    return res;
-}
-
 bool HeadPhoneDetector::areHeadphonesConnected()
 {
-    std::vector<AudioDeviceID> devices(fetchAllDevices());
+    std::vector<AudioDeviceID> devices(AudioUtils::fetchAllOutputDeviceIds());
     bool foundHeadphones = false;
     for (auto deviceIdPtr = devices.begin() ; deviceIdPtr != devices.end() ; ++deviceIdPtr) {
         MJLOG("================\n");

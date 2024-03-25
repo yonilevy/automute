@@ -537,7 +537,7 @@
 				CODE_SIGN_ENTITLEMENTS = automute/automute.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 26ZKW6U635;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -555,7 +555,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yonilevy.mutejack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -570,7 +570,7 @@
 				CODE_SIGN_ENTITLEMENTS = automute/automute.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 26ZKW6U635;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -588,7 +588,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yonilevy.mutejack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

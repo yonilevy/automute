@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#include "MJHeadphoneDetector.hpp"
+#include "MJHeadphoneTracker.hpp"
 #import "MJMenuBarController.h"
 #import "MJUserDefaults.h"
 #import "MJDisableMuteManager.h"
@@ -12,7 +12,7 @@
 
 @interface AppDelegate () <MJMenuBarControllerDelegate, MJDisableMuteManagerDelegate, MJSystemEventHandlerDelegate>
 
-@property (nonatomic) HeadPhoneDetector *headphoneDetector;
+@property(nonatomic) HeadphonesTracker *headphonesTracker;
 @property(nonatomic, strong) MJNotifier *notifier;
 // Note: nil when the menu bar icon is hidden.
 @property(nonatomic, strong) MJMenuBarController *menuBarController;
@@ -32,10 +32,10 @@
 
     self.notifier = [[MJNotifier alloc] init];
 
-    self.headphoneDetector = new HeadPhoneDetector();
+    self.headphonesTracker = new HeadphonesTracker();
     __weak AppDelegate *weakSelf = self;
-    self.headphoneDetector->listen(^(bool headphonesConnected) {
-        [weakSelf onHeadphoneStateChangedTo:headphonesConnected];
+    self.headphonesTracker->track(^(bool headphonesConnected, bool followingHeadphonesDisconnect) {
+        [weakSelf onDefaultOutputDeviceChangedWithIsHeadphones:headphonesConnected followingHeadphonesDisconnect:followingHeadphonesDisconnect];
     });
 
     /// If the app was launched by the user (rather than auto launch
@@ -63,7 +63,7 @@
 - (MJMenuBarController *)buildMenuBarController
 {
     return [[MJMenuBarController alloc] initWithDelegate:self
-                                     headphonesConnected:self.headphoneDetector->areHeadphonesConnected()];
+                                     headphonesConnected:self.headphonesTracker->isDefaultOutputDeviceHeadphones()];
 }
 
 - (BOOL)checkAndClearDidLaunchAtLogin
@@ -142,10 +142,12 @@
     }
 }
 
-- (void)onHeadphoneStateChangedTo:(bool)connected
+- (void)onDefaultOutputDeviceChangedWithIsHeadphones:(BOOL)isHeadphones followingHeadphonesDisconnect:(BOOL)followingHeadphonesDisconnect
 {
-    [self.menuBarController updateMenuIcon:connected];
-    if (!connected && [self menuBarController_isSetToMuteOnHeadphones]) {
+    NSLog(@"Default output device changed [isHeadphones=%d] [followingHeadphonesDisconnect=%d]", isHeadphones, followingHeadphonesDisconnect);
+    
+    [self.menuBarController updateMenuIcon:isHeadphones];
+    if (followingHeadphonesDisconnect && [self menuBarController_isSetToMuteOnHeadphones]) {
         /// - Here lies an OS weirdness: the output device has "officially" changed, but
         ///     attempting to mute it at this stage will fail. It seems to take the OS a short while
         ///     (lets call it T) before volume changes actually apply to the new device.
@@ -190,7 +192,7 @@
     if (self.isMutingDisabled) return false;
 
     OSStatus res = AudioUtils::mute(AudioUtils::fetchDefaultOutputDeviceId());
-    MJLOG("Mute default output device -> %d\n", res);
+    MJLOG("Mute default output device [res=%d]\n", res);
 
     return true;
 }
@@ -202,7 +204,7 @@
     MJLOG("Mute all output devices:\n");
     for (const auto& deviceId : AudioUtils::fetchAllOutputDeviceIds()) {
         OSStatus res = AudioUtils::mute(deviceId);
-        MJLOG("\tMute device %u -> %d\n", deviceId, res);
+        MJLOG("\tMute [device=%u] [res=%d]\n", deviceId, res);
     }
 
     return true;
@@ -223,7 +225,7 @@
 
 - (void)menuBarController_quit
 {
-    delete self.headphoneDetector;
+    delete self.headphonesTracker;
     [NSApp terminate:self];
 }
 
@@ -270,7 +272,7 @@
 - (void)disableMuteManager_updateDisabledMuting:(BOOL)isDisabled
 {
     self.isMutingDisabled = isDisabled;
-    [self.menuBarController updateMenuIcon:self.headphoneDetector->areHeadphonesConnected()];
+    [self.menuBarController updateMenuIcon:self.headphonesTracker->isDefaultOutputDeviceHeadphones()];
 }
 
 - (void)menuBarController_toggleMuteNotifications
